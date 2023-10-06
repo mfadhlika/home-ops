@@ -1,0 +1,11 @@
+---
+apiVersion: snapscheduler.backube/v1
+kind: SnapshotSchedule
+metadata:
+  name: daily
+  namespace: default
+spec:
+  retention:
+    expires: "168h" # optional
+    maxCount: 10 # optional
+  schedule: "@daily"

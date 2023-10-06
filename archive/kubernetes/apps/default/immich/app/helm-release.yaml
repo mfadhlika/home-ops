@@ -1,0 +1,58 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: immich
+  namespace: kube-system
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: ./charts/apps/immich
+      sourceRef:
+        kind: GitRepository
+        name: immich
+        namespace: flux-system
+      interval: 1m
+  values:
+    postgresql:
+      enabled: true
+      global:
+        postgresql:
+          auth:
+            existingSecret: immich-postgresql
+            username: immich
+            database: immich
+    redis:
+      enabled: true
+      architecture: standalone
+      auth:
+        enabled: false
+    common_env:
+      DB_PASSWORD:
+        valueFrom:
+          secretKeyRef:
+            name: immich-postgresql
+            key: password
+    ingress:
+      main:
+        enabled: true
+        primary: true
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt"
+          kubernetes.io/ingress.class: "traefik"
+          external-dns/is-public: "true"
+        hosts:
+          - host: immich.fadhlika.com
+            paths:
+              - path: "/"
+        tls:
+          - secretName: immich-tls
+            hosts:
+              - immich.fadhlika.com
+    persistence:
+      library:
+        enabled: true
+        type: nfs
+        server: openmediavault.oyoy.lan
+        path: /storage/pictures/camera

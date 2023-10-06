@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaresolverr
+  labels:
+    app.kubernetes.io/instance: flaresolverr
+    app.kubernetes.io/name: flaresolverr
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  serviceName: "flaresolverr"
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: flaresolverr
+      app.kubernetes.io/name: flaresolverr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: flaresolverr
+        app.kubernetes.io/name: flaresolverr
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: flaresolverr
+          image: ghcr.io/flaresolverr/flaresolverr:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8191
+              name: http
+          env:
+            - name: TZ
+              value: Asia/Jakarta

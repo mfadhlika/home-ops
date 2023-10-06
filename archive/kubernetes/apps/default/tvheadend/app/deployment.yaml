@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tvheadend
+  labels:
+    app.kubernetes.io/instance: tvheadend
+    app.kubernetes.io/name: tvheadend
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: tvheadend
+      app.kubernetes.io/name: tvheadend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: tvheadend
+        app.kubernetes.io/name: tvheadend
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: tvheadend-config
+        - name: share
+          nfs:
+            server: openmediavault.oyoy.lan
+            path: /storage/media/recordings
+        - name: dev-dvb
+          hostPath:
+            path: /dev/dvb
+      containers:
+        - name: tvheadend
+          image: lscr.io/linuxserver/tvheadend:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: Asia/Jakarta
+          ports:
+            - containerPort: 9981
+              protocol: TCP
+              name: webui
+            - containerPort: 9982
+              protocol: TCP
+              name: htsp
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: share
+              mountPath: /recordings
+            - name: dev-dvb
+              mountPath: /dev/dvb
+          securityContext:
+            privileged: true
+      nodeAffinity:
+        required:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - domestic-whale

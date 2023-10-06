@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vaultwarden-postgres
+  labels:
+    app.kubernetes.io/instance: vaultwarden
+    app.kubernetes.io/name: postgres
+spec:
+  serviceName: vaultwarden-postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: vaultwarden
+      app.kubernetes.io/name: postgres
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: vaultwarden
+        app.kubernetes.io/name: postgres
+    spec:
+      volumes:
+        - name: vaultwarden-data
+          persistentVolumeClaim:
+            claimName: vaultwarden-data
+      containers:
+        - name: postgres
+          image: postgres:14
+          ports:
+            - containerPort: 5432
+              name: postgres-port
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: vaultwarden-secret
+                  key: db_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: vaultwarden-secret
+                  key: db_password
+          volumeMounts:
+            - name: vaultwarden-data
+              mountPath: /var/lib/postgresql/data
