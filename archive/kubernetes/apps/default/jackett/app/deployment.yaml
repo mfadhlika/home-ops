@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jackett
+  labels:
+    app.kubernetes.io/instance: jackett
+    app.kubernetes.io/name: jackett
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  serviceName: "jackett"
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: jackett
+      app.kubernetes.io/name: jackett
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: jackett
+        app.kubernetes.io/name: jackett
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: jackett-config
+      containers:
+        - name: jackett
+          image: lscr.io/linuxserver/jackett:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9117
+              name: http
+          env:
+            - name: TZ
+              value: Asia/Jakarta
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          volumeMounts:
+            - name: config
+              mountPath: /config

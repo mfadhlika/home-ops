@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vaultwarden
+  labels:
+    app.kubernetes.io/instance: vaultwarden
+    app.kubernetes.io/name: vaultwarden
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/instance: vaultwarden
+    app.kubernetes.io/name: vaultwarden
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+    - name: websocket
+      port: 81
+      targetPort: websocket
