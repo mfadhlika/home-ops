@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tanoshi
+  labels:
+    app.kubernetes.io/instance: tanoshi
+    app.kubernetes.io/name: tanoshi
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/instance: tanoshi
+    app.kubernetes.io/name: tanoshi
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: http

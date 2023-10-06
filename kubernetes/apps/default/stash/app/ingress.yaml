@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: stash
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    kubernetes.io/ingress.class: "traefik"
+    external-dns/is-public: "true"
+spec:
+  rules:
+    - host: stash.fadhlika.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: stash
+                port:
+                  name: http
+  tls:
+    - secretName: stash-tls
+      hosts:
+        - stash.fadhlika.com

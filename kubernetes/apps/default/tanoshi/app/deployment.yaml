@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tanoshi
+  labels:
+    app.kubernetes.io/instance: tanoshi
+    app.kubernetes.io/name: tanoshi
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  serviceName: "tanoshi"
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: tanoshi
+      app.kubernetes.io/name: tanoshi
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: tanoshi
+        app.kubernetes.io/name: tanoshi
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: tanoshi-data
+        - name: share
+          nfs:
+            server: openmediavault.oyoy.lan
+            path: /storage/books/manga
+        - name: config
+          configMap:
+            name: tanoshi-config
+      containers:
+        - name: tanoshi
+          image: faldez/tanoshi:0.30.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TANOSHI_HOME
+              value: /data
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            timeoutSeconds: 60
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: share
+              mountPath: /share
+          ports:
+            - containerPort: 80
+              name: http

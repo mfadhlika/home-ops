@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: stash
+  labels:
+    app.kubernetes.io/instance: stash
+    app.kubernetes.io/name: stash
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 9999
+      targetPort: http
+      name: http
+  selector:
+    app.kubernetes.io/instance: stash
+    app.kubernetes.io/name: stash

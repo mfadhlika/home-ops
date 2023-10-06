@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: miniflux
+  labels:
+    app: miniflux
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: miniflux
+  template:
+    metadata:
+      labels:
+        app: miniflux
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: miniflux-migration
+          image: miniflux/miniflux:latest
+          imagePullPolicy: Always
+          env:
+            - name: POSTGRES_HOST
+              value: miniflux-postgres
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: miniflux-postgres-secret
+                  key: db_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: miniflux-postgres-secret
+                  key: db_password
+            - name: DATABASE_URL
+              value: "postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST)/$(POSTGRES_USER)?sslmode=disable"
+            - name: RUN_MIGRATIONS
+              value: "1"
+            - name: CREATE_ADMIN
+              value: "1"
+            - name: ADMIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: miniflux-secret
+                  key: admin_username
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: miniflux-secret
+                  key: admin_password
+            - name: BASE_URL
+              value: https://miniflux.fadhlika.com
+          livenessProbe:
+            exec:
+              command: ["CMD", "/usr/bin/miniflux", "-healthcheck", "auto"]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          ports:
+            - containerPort: 8080
+              name: http

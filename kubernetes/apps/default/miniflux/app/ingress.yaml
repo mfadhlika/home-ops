@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: miniflux
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    kubernetes.io/ingress.class: "traefik"
+    external-dns/is-public: "true"
+spec:
+  rules:
+    - host: miniflux.fadhlika.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: miniflux
+                port:
+                  name: http
+  tls:
+    - secretName: miniflux-tls
+      hosts:
+        - miniflux.fadhlika.com

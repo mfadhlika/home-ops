@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: szurubooru-postgres
+  labels:
+    app.kubernetes.io/instance: szurubooru
+    app.kubernetes.io/name: postgres
+spec:
+  serviceName: szurubooru-postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: szurubooru
+      app.kubernetes.io/name: postgres
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: szurubooru
+        app.kubernetes.io/name: postgres
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: szurubooru-postgres-data
+      containers:
+        - name: postgres
+          image: postgres:11
+          ports:
+            - containerPort: 5432
+              name: postgres-port
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: szurubooru-postgres-secret
+                  key: db_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: szurubooru-postgres-secret
+                  key: db_password
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data

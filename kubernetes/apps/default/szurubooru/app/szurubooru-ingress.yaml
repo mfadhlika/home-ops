@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: szurubooru
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    kubernetes.io/ingress.class: "traefik"
+    external-dns/is-public: "true"
+spec:
+  rules:
+    - host: szurubooru.fadhlika.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: szurubooru
+                port:
+                  name: http
+  tls:
+    - secretName: szurubooru-tls
+      hosts:
+        - szurubooru.fadhlika.com

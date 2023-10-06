@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: transmission
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    kubernetes.io/ingress.class: "traefik"
+    external-dns/is-public: "true"
+spec:
+  rules:
+    - host: transmission.fadhlika.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: transmission
+                port:
+                  name: http
+  tls:
+    - secretName: transmission-tls
+      hosts:
+        - transmission.fadhlika.com

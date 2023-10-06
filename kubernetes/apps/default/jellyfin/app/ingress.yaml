@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jellyfin
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    kubernetes.io/ingress.class: "traefik"
+    external-dns/is-public: "true"
+spec:
+  rules:
+    - host: jellyfin.fadhlika.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: jellyfin-tcp
+                port:
+                  name: http
+  tls:
+    - secretName: jellyfin-tls
+      hosts:
+        - jellyfin.fadhlika.com

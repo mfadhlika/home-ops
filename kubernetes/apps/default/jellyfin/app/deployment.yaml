@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin
+  labels:
+    app.kubernetes.io/instance: jellyfin
+    app.kubernetes.io/name: jellyfin
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: jellyfin
+      app.kubernetes.io/name: jellyfin
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: jellyfin
+        app.kubernetes.io/name: jellyfin
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      runtimeClassName: nvidia
+      volumes:
+        - name: media
+          nfs:
+            server: openmediavault.oyoy.lan
+            path: /storage/media
+        - name: config
+          persistentVolumeClaim:
+            claimName: jellyfin-config
+      containers:
+        - name: jellyfin
+          image: linuxserver/jellyfin:10.8.11
+          imagePullPolicy: Always
+          env:
+            - name: JELLYFIN_PublishedServerUrl
+              value: jellyfin.fadhlika.com
+            - name: NVIDIA_DRIVER_CAPABILITIES
+              value: all
+            - name: NVIDIA_VISIBLE_DEVICES
+              value: all
+          ports:
+            - containerPort: 8096
+              name: http
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8096
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            timeoutSeconds: 60
+          volumeMounts:
+            - name: media
+              mountPath: /data
+            - name: config
+              mountPath: /config
+          resources:
+            limits:
+              nvidia.com/gpu.shared: 1 # requesting 1 GPU

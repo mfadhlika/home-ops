@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: miniflux-postgres
+  labels:
+    app: miniflux
+    name: postgres
+spec:
+  serviceName: miniflux-postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: miniflux
+      name: postgres
+  template:
+    metadata:
+      labels:
+        app: miniflux
+        name: postgres
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: miniflux-postgres--data
+      containers:
+        - name: postgres
+          image: postgres:15
+          ports:
+            - containerPort: 5432
+              name: postgres-port
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: miniflux-postgres-secret
+                  key: db_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: miniflux-postgres-secret
+                  key: db_password
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          livenessProbe:
+            exec:
+              command: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data

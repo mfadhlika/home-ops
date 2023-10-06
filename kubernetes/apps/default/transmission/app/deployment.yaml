@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transmission
+  labels:
+    app.kubernetes.io/instance: transmission
+    app.kubernetes.io/name: transmission
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: transmission
+      app.kubernetes.io/name: transmission
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: transmission
+        app.kubernetes.io/name: transmission
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: transmission-config
+        - name: share
+          nfs:
+            server: openmediavault.oyoy.lan
+            path: /storage/downloads
+      containers:
+        - name: transmission
+          image: lscr.io/linuxserver/transmission:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9091
+              name: http
+            - containerPort: 51413
+              name: torrent-tcp
+              protocol: TCP
+            - containerPort: 51413
+              name: torrent-udp
+              protocol: UDP
+          env:
+            - name: TZ
+              value: Asia/Jakarta
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: share
+              mountPath: /downloads

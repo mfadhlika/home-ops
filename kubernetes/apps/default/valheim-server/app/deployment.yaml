@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: valheim-server
+  labels:
+    app.kubernetes.io/instance: valheim-server
+    app.kubernetes.io/name: valheim-server
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: valheim-server
+      app.kubernetes.io/name: valheim-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: valheim-server
+        app.kubernetes.io/name: valheim-server
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: valheim-server-data
+        - name: share
+          nfs:
+            server: openmediavault.oyoy.lan
+            path: /storage/apps/valheim-server
+      containers:
+        - name: valheim-server
+          image: lloesche/valheim-server:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: Asia/Jakarta
+            - name: SERVER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: valheim-server-secret
+                  key: servername
+            - name: WORLD_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: valheim-server-secret
+                  key: worldname
+            - name: SERVER_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: valheim-server-secret
+                  key: serverpass
+            - name: SERVER_PUBLIC
+              value: "false"
+            - name: BACKUPS_DIRECTORY
+              value: /backups
+          securityContext:
+            capabilities:
+              add:
+                - SYS_NICE
+          ports:
+            - containerPort: 2456
+              name: game
+              protocol: UDP
+            - containerPort: 2457
+              name: query
+              protocol: UDP
+          volumeMounts:
+            - name: data
+              mountPath: /opt/valheim
+              subPath: data
+            - name: data
+              mountPath: /config
+              subPath: config
+            - name: share
+              mountPath: /backups
