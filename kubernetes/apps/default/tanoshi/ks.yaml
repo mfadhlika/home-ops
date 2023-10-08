@@ -6,6 +6,8 @@ metadata:
   name: tanoshi
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: external-secrets-stores
   path: ./kubernetes/apps/default/tanoshi/app
   prune: true
   sourceRef:
