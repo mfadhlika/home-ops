@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microbin
+  labels:
+    app.kubernetes.io/instance: microbin
+    app.kubernetes.io/name: microbin
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  serviceName: "microbin"
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: microbin
+      app.kubernetes.io/name: microbin
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: microbin
+        app.kubernetes.io/name: microbin
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: nvme
+          nfs:
+            server: openmediavault.oyoy.lan
+            path: /nvme/apps/microbin
+      containers:
+        - name: microbin
+          image: danielszabo99/microbin:2.0.4
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: MICROBIN_ADMIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: microbin-secret
+                  key: username
+            - name: MICROBIN_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: microbin-secret
+                  key: password
+            - name: MICROBIN_NO_LISTING
+              value: "true"
+            - name: MICROBIN_READONLY
+              value: "true"
+            - name: MICROBIN_DATA_DIR
+              value: "/data"
+            - name: MICROBIN_PORT
+              value: "8080"
+            - name: MICROBIN_UPLOADER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: microbin-secret
+                  key: uploaderpassword
+          volumeMounts:
+            - name: nvme
+              mountPath: /data
