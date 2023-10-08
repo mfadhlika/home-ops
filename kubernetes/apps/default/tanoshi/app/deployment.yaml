@@ -28,10 +28,13 @@ spec:
         - name: share
           nfs:
             server: openmediavault.oyoy.lan
-            path: /storage/books/manga
+            path: /storage
         - name: config
           configMap:
             name: tanoshi-config
+        - name: secret
+          secret:
+            secretName: tanoshi-secret
       containers:
         - name: tanoshi
           image: faldez/tanoshi:0.30.0
@@ -47,10 +50,17 @@ spec:
             periodSeconds: 60
             timeoutSeconds: 60
           volumeMounts:
+            - name: secret
+              mountPath: /data/config.yml
+              subPath: config.yml
             - name: data
               mountPath: /data
             - name: share
-              mountPath: /share
+              mountPath: /manga
+              subPath: books/manga
+            - name: share
+              mountPath: /cache
+              subPath: apps/tanoshi/cache
           ports:
             - containerPort: 80
               name: http
