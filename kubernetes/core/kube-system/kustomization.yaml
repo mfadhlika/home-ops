@@ -4,3 +4,4 @@ resources:
   - external-secrets/ks.yaml
   - nvidia-device-plugin/ks.yaml
   - onepassword-connect/ks.yaml
+  - traefik/ks.yaml
