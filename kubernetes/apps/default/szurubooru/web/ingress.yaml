@@ -15,7 +15,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: szurubooru
+                name: szurubooru-web
                 port:
                   name: http
   tls:

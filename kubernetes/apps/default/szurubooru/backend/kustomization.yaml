@@ -3,6 +3,5 @@ kind: Kustomization
 namespace: default
 resources:
   - configmap.yaml
-  - szurubooru-deployment.yaml
-  - szurubooru-ingress.yaml
-  - szurubooru-service.yaml
+  - deployment.yaml
+  - service.yaml
