@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: szurubooru-web
+  labels:
+    app.kubernetes.io/name: szurubooru-web
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: szurubooru-web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: szurubooru-web
+    spec:
+      restartPolicy: Always
+      volumes:
+        - name: share
+          nfs:
+            server: openmediavault.oyoy.lan
+            path: /storage/apps/szurubooru
+      containers:
+        - name: szurubooru-web
+          image: szurubooru/client:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              name: http
+          env:
+            - name: BACKEND_HOST
+              value: szurubooru-backend
+            - name: BASE_URL
+              value: https://szurubooru.fadhlika.com
+          volumeMounts:
+            - name: share
+              mountPath: /data

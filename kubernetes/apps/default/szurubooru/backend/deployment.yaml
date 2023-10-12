@@ -1,26 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: szurubooru
+  name: szurubooru-backend
   labels:
-    app.kubernetes.io/instance: szurubooru
-    app.kubernetes.io/name: szurubooru
+    app.kubernetes.io/name: szurubooru-backend
 spec:
   replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app.kubernetes.io/instance: szurubooru
-      app.kubernetes.io/name: szurubooru
+      app.kubernetes.io/name: szurubooru-backend
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: szurubooru
-        app.kubernetes.io/name: szurubooru
+        app.kubernetes.io/name: szurubooru-backend
     spec:
       restartPolicy: Always
       volumes:
-        - name: szurubooru-config
+        - name: config
           configMap:
             name: szurubooru-config
         - name: share
@@ -46,24 +43,10 @@ spec:
                   key: db_password
           ports:
             - containerPort: 6666
-              name: backend-http
+              name: http
           volumeMounts:
-            - name: szurubooru-config
+            - name: config
               mountPath: /opt/app/config.yaml
               subPath: config.yaml
-            - name: share
-              mountPath: /data
-        - name: web
-          image: szurubooru/client:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 80
-              name: web-http
-          env:
-            - name: BACKEND_HOST
-              value: localhost
-            - name: BASE_URL
-              value: https://szurubooru.fadhlika.com
-          volumeMounts:
             - name: share
               mountPath: /data
