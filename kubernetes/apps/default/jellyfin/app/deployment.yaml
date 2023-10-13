@@ -29,6 +29,10 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: jellyfin-config
+        - name: transcodes
+          emptyDir:
+            sizeLimit: 1Gi
+            medium: Memory
       containers:
         - name: jellyfin
           image: linuxserver/jellyfin:10.8.11
@@ -56,6 +60,8 @@ spec:
               mountPath: /data
             - name: config
               mountPath: /config
+            - name: transcodes
+              mountPath: /transcodes
           resources:
             limits:
               nvidia.com/gpu.shared: 1 # requesting 1 GPU
