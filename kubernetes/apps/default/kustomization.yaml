@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - changedetection/ks.yaml
   - jellyfin/ks.yaml
+  - memos/ks.yaml
   - miniflux/ks.yaml
   - node-red/ks.yaml
   - radarr/ks.yaml
