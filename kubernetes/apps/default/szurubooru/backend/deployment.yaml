@@ -17,9 +17,9 @@ spec:
     spec:
       restartPolicy: Always
       volumes:
-        - name: config
-          configMap:
-            name: szurubooru-config
+        - name: secret
+          secret:
+            secretName: szurubooru-secret
         - name: share
           nfs:
             server: openmediavault.oyoy.lan
@@ -45,7 +45,7 @@ spec:
             - containerPort: 6666
               name: http
           volumeMounts:
-            - name: config
+            - name: secret
               mountPath: /opt/app/config.yaml
               subPath: config.yaml
             - name: share
