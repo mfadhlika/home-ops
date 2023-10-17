@@ -5,6 +5,7 @@ resources:
   - backube.yaml
   - bitnami.yaml
   - cnpg.yaml
+  - coder-v2.yaml
   - csi-driver-smb.yaml
   - external-dns.yaml
   - external-secrets.yaml
