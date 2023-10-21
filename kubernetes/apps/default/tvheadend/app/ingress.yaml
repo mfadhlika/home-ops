@@ -17,7 +17,7 @@ spec:
               service:
                 name: tvheadend
                 port:
-                  number: 9981
+                  name: webui
   tls:
     - secretName: tvheadend-tls
       hosts:

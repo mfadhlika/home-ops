@@ -3,20 +3,17 @@ kind: Deployment
 metadata:
   name: tvheadend
   labels:
-    app.kubernetes.io/instance: tvheadend
-    app.kubernetes.io/name: tvheadend
+    app: tvheadend
 spec:
   replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app.kubernetes.io/instance: tvheadend
-      app.kubernetes.io/name: tvheadend
+      app: tvheadend
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: tvheadend
-        app.kubernetes.io/name: tvheadend
+        app: tvheadend
     spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 10
@@ -54,11 +51,5 @@ spec:
               mountPath: /dev/dvb
           securityContext:
             privileged: true
-      nodeAffinity:
-        required:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                    - domestic-whale
+      nodeSelector:
+        feature.node.kubernetes.io/usb-ff_0572_689a.present: "true"
