@@ -12,4 +12,5 @@ resources:
   - szurubooru/ks.yaml
   - tanoshi/ks.yaml
   - transmission/ks.yaml
+  - tvheadend/ks.yaml
   - valheim-server/ks.yaml

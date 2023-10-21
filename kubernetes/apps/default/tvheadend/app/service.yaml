@@ -3,15 +3,14 @@ kind: Service
 metadata:
   name: tvheadend
   labels:
-    app.kubernetes.io/instance: tvheadend
-    app.kubernetes.io/name: tvheadend
+    app: tvheadend
   annotations:
     metallb.universe.tf/loadBalancerIPs: 192.168.2.206
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   selector:
-    app.kubernetes.io/instance: tvheadend
-    app.kubernetes.io/name: tvheadend
+    app: tvheadend
   ports:
     - name: webui
       port: 9981
