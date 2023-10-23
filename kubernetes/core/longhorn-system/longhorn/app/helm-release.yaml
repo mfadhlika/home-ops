@@ -17,8 +17,7 @@ spec:
     persistence:
       defaultClassReplicaCount: 1
     defaultSettings:
-      backupTarget: s3://backups@ap-singapore-1/longhorn
-      backupTargetCredentialSecret: longhorn-backup-credentials
+      backupTarget: nfs://openmediavault.oyoy.lan:/storage/backups/longhorn
     longhornUI:
       replicas: 1
     ingress:
