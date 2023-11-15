@@ -24,17 +24,18 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: valheim-server-data
-        - name: share
+        - name: config
+          persistentVolumeClaim:
+            claimName: valheim-server-config
+        - name: backups
           nfs:
             server: openmediavault.oyoy.lan
-            path: /storage/apps/valheim-server
+            path: /backups/valheim-server
       containers:
         - name: valheim-server
-          image: lloesche/valheim-server:latest
+          image: ghcr.io/lloesche/valheim-server:latest
           imagePullPolicy: Always
           env:
-            - name: TZ
-              value: Asia/Jakarta
             - name: SERVER_NAME
               valueFrom:
                 secretKeyRef:
@@ -54,10 +55,6 @@ spec:
               value: "false"
             - name: BACKUPS_DIRECTORY
               value: /backups
-          securityContext:
-            capabilities:
-              add:
-                - SYS_NICE
           ports:
             - containerPort: 2456
               name: game
@@ -68,9 +65,7 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /opt/valheim
-              subPath: data
-            - name: data
+            - name: config
               mountPath: /config
-              subPath: config
-            - name: share
+            - name: backups
               mountPath: /backups
