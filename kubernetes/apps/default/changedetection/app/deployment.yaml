@@ -27,7 +27,7 @@ spec:
             claimName: changedetection-data
       containers:
         - name: changedetection
-          image: dgtlmoon/changedetection.io:0.43
+          image: dgtlmoon/changedetection.io:0.45.7.3
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: data
