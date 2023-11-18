@@ -35,7 +35,7 @@ spec:
             medium: Memory
       containers:
         - name: jellyfin
-          image: linuxserver/jellyfin:10.8.11
+          image: lscr.io/linuxserver/jellyfin:10.8.12
           imagePullPolicy: Always
           env:
             - name: JELLYFIN_PublishedServerUrl
