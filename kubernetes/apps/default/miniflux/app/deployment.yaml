@@ -18,8 +18,8 @@ spec:
       restartPolicy: Always
       containers:
         - name: miniflux-migration
-          image: miniflux/miniflux:latest
-          imagePullPolicy: Always
+          image: miniflux/miniflux:2.0.50
+          imagePullPolicy: IfNotPresent
           env:
             - name: POSTGRES_HOST
               value: miniflux-postgres
