@@ -1,0 +1,16 @@
+# clustertunnel.yaml
+apiVersion: networking.cfargotunnel.com/v1alpha1
+kind: ClusterTunnel
+metadata:
+  name: homelab-cluster-tunnel
+spec:
+  existingTunnel:
+    name: homelab-tunnel
+  size: 2
+  cloudflare:
+    email: cloudflare@fadhlika.com
+    domain: fadhlika.com
+    secret: cloudflare-secret
+    accountId: 199699894538ce864ef6e84b322a8dd9
+    CLOUDFLARE_API_TOKEN: cloudflare_api_token
+    CLOUDFLARE_API_KEY: cloudflare_api_key
