@@ -26,9 +26,9 @@ spec:
           persistentVolumeClaim:
             claimName: sonarr-config
         - name: share
-          nfs:
-            server: openmediavault.oyoy.lan
-            path: /storage
+          hostPath:
+            path: /mnt/storage
+            type: Directory
       containers:
         - name: sonarr
           image: lscr.io/linuxserver/sonarr:latest

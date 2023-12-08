@@ -23,9 +23,9 @@ spec:
       runtimeClassName: nvidia
       volumes:
         - name: media
-          nfs:
-            server: openmediavault.oyoy.lan
-            path: /storage/media
+          hostPath:
+            path: /mnt/storage/media
+            type: Directory
         - name: config
           persistentVolumeClaim:
             claimName: jellyfin-config
