@@ -27,9 +27,6 @@ spec:
         - name: config
           configMap:
             name: node-red-config
-        - name: secret
-          secret:
-            secretName: node-red-secret
       initContainers:
         - name: init
           image: busybox:1.28
@@ -55,12 +52,7 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data
-            - name: secret
-              mountPath: /config/oci_config
-              subPath: config
-            - name: secret
-              mountPath: /config/oci.pem
-              subPath: oci.pem
             - name: config
               mountPath: /data/settings.js
               subPath: settings.js
+              readOnly: true
