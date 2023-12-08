@@ -22,9 +22,9 @@ spec:
           persistentVolumeClaim:
             claimName: tvheadend-config
         - name: share
-          nfs:
-            server: openmediavault.oyoy.lan
-            path: /storage/media/recordings
+          hostPath:
+            path: /mnt/storage/media/recordings
+            type: Directory
         - name: dev-dvb
           hostPath:
             path: /dev/dvb

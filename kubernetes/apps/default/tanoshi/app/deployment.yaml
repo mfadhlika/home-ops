@@ -26,9 +26,9 @@ spec:
           persistentVolumeClaim:
             claimName: tanoshi-data
         - name: share
-          nfs:
-            server: openmediavault.oyoy.lan
-            path: /storage
+          hostPath:
+            path: /mnt/storage
+            type: Directory
         - name: config
           configMap:
             name: tanoshi-config

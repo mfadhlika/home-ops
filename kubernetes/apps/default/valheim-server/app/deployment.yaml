@@ -28,9 +28,9 @@ spec:
           persistentVolumeClaim:
             claimName: valheim-server-config
         - name: backups
-          nfs:
-            server: openmediavault.oyoy.lan
-            path: /backups/valheim-server
+          hostPath:
+            path: /mnt/storage/backups/valheim-server
+            type: Directory
       containers:
         - name: valheim-server
           image: ghcr.io/lloesche/valheim-server:latest

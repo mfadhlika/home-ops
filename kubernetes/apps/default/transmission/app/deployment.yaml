@@ -25,9 +25,9 @@ spec:
           persistentVolumeClaim:
             claimName: transmission-config
         - name: share
-          nfs:
-            server: openmediavault.oyoy.lan
-            path: /storage/downloads
+          hostPath:
+            path: /mnt/storage/downloads
+            type: Directory
       containers:
         - name: transmission
           image: lscr.io/linuxserver/transmission:latest

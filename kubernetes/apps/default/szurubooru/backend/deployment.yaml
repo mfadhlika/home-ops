@@ -21,9 +21,9 @@ spec:
           secret:
             secretName: szurubooru-secret
         - name: share
-          nfs:
-            server: openmediavault.oyoy.lan
-            path: /storage/apps/szurubooru
+          hostPath:
+            path: /mnt/storage/apps/szurubooru
+            type: Directory
       containers:
         - name: backend
           image: szurubooru/server:latest
