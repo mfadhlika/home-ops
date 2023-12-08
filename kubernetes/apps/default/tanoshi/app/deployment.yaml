@@ -51,8 +51,8 @@ spec:
             timeoutSeconds: 60
           volumeMounts:
             - name: secret
-              mountPath: /data/config.yml
-              subPath: config.yml
+              mountPath: /var/secret
+              readOnly: true
             - name: data
               mountPath: /data
             - name: share
@@ -64,3 +64,10 @@ spec:
           ports:
             - containerPort: 80
               name: http
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - cp /var/secret/config.yml /data/config.yml
