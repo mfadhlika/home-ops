@@ -5,7 +5,6 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt"
     kubernetes.io/ingress.class: "traefik"
-    external-dns/is-public: "true"
 spec:
   rules:
     - host: tvheadend.fadhlika.com
