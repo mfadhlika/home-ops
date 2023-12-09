@@ -15,6 +15,4 @@ data:
       originRequest:
         originServerName: external.fadhlika.com
         noTLSVerify: true
-    - hostname: hello.fadhlika.com
-      service: hello_world
     - service: http_status:404
