@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared
+  labels: &labels
+    app.kubernetes.io/part-of: cloudflared
+    app.kubernetes.io/name: cloudflared
+spec:
+  selector:
+    matchLabels:
+      <<: *labels
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        <<: *labels
+    spec:
+      volumes:
+        - name: creds
+          secret:
+            secretName: cloudflare-tunnel-secret
+        - name: config
+          configMap:
+            name: cloudflared-config
+      containers:
+        - name: cloudflared
+          image: cloudflare/cloudflared:2023.10.0
+          args:
+            - tunnel
+            - --loglevel
+            - debug
+            - --config
+            - /etc/cloudflared/config/config.yaml
+            - run
+          livenessProbe:
+            httpGet:
+              path: /ready
+              port: 2000
+            failureThreshold: 1
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          volumeMounts:
+            - name: config
+              mountPath: /etc/cloudflared/config
+              readOnly: true
+            - name: creds
+              mountPath: /etc/cloudflared/creds
+              readOnly: true
