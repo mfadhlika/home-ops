@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: microbin
   labels:
-    app.kubernetes.io/instance: microbin
+    app.kubernetes.io/part-of: microbin
     app.kubernetes.io/name: microbin
 spec:
   type: ClusterIP
   selector:
-    app.kubernetes.io/instance: microbin
+    app.kubernetes.io/part-of: microbin
     app.kubernetes.io/name: microbin
   ports:
     - name: http

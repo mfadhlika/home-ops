@@ -2,18 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: miniflux
-  labels:
-    app: miniflux
+  labels: &labels
+    app.kubernetes.io/part-of: miniflux
+    app.kubernetes.io/name: miniflux
+    app.kubernetes.io/component: server
 spec:
   replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: miniflux
+      <<: *labels
   template:
     metadata:
       labels:
-        app: miniflux
+        <<: *labels
     spec:
       restartPolicy: Always
       containers:

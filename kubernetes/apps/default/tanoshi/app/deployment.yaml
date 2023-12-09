@@ -2,22 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tanoshi
-  labels:
-    app.kubernetes.io/instance: tanoshi
+  labels: &labels
+    app.kubernetes.io/part-of: tanoshi
     app.kubernetes.io/name: tanoshi
+    app.kubernetes.io/component: server
 spec:
   replicas: 1
   revisionHistoryLimit: 0
   serviceName: "tanoshi"
   selector:
     matchLabels:
-      app.kubernetes.io/instance: tanoshi
-      app.kubernetes.io/name: tanoshi
+      <<: *labels
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: tanoshi
-        app.kubernetes.io/name: tanoshi
+        <<: *labels
     spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 10

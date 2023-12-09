@@ -4,11 +4,15 @@ kind: Service
 metadata:
   name: szurubooru-backend
   labels:
+    app.kubernetes.io/part-of: szurubooru
     app.kubernetes.io/name: szurubooru-backend
+    app.kubernetes.io/component: server
 spec:
   type: ClusterIP
   selector:
+    app.kubernetes.io/part-of: szurubooru
     app.kubernetes.io/name: szurubooru-backend
+    app.kubernetes.io/component: server
   ports:
     - name: http
       port: 6666

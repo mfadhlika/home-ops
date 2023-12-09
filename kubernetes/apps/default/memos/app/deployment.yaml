@@ -3,17 +3,19 @@ kind: Deployment
 metadata:
   name: memos
   labels:
-    app: memos
+    labels: &labels
+      app.kubernetes.io/part-of: memos
+      app.kubernetes.io/name: memos
 spec:
   replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: memos
+      <<: *labels
   template:
     metadata:
       labels:
-        app: memos
+        <<: *labels
     spec:
       restartPolicy: Always
       volumes:

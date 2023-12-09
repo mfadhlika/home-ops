@@ -2,18 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: szurubooru-web
-  labels:
+  labels: &labels
+    app.kubernetes.io/part-of: szurubooru
     app.kubernetes.io/name: szurubooru-web
+    app.kubernetes.io/component: web
 spec:
   replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app.kubernetes.io/name: szurubooru-web
+      <<: *labels
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: szurubooru-web
+        <<: *labels
     spec:
       restartPolicy: Always
       volumes:

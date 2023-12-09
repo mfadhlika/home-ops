@@ -3,19 +3,19 @@ kind: StatefulSet
 metadata:
   name: vaultwarden-postgres
   labels:
-    app.kubernetes.io/instance: vaultwarden
+    app.kubernetes.io/part-of: vaultwarden
     app.kubernetes.io/name: postgres
 spec:
   serviceName: vaultwarden-postgres
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance: vaultwarden
+      app.kubernetes.io/part-of: vaultwarden
       app.kubernetes.io/name: postgres
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: vaultwarden
+        app.kubernetes.io/part-of: vaultwarden
         app.kubernetes.io/name: postgres
     spec:
       volumes:

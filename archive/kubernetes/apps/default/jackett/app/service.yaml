@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: jackett
   labels:
-    app.kubernetes.io/instance: jackett
+    app.kubernetes.io/part-of: jackett
     app.kubernetes.io/name: jackett
 spec:
   type: ClusterIP
   selector:
-    app.kubernetes.io/instance: jackett
+    app.kubernetes.io/part-of: jackett
     app.kubernetes.io/name: jackett
   ports:
     - name: http

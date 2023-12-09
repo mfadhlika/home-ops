@@ -2,26 +2,25 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: miniflux-postgres
-  labels:
-    app: miniflux
-    name: postgres
+  labels: &labels
+    app.kubernetes.io/part-of: miniflux
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/component: database
 spec:
   serviceName: miniflux-postgres
   replicas: 1
   selector:
     matchLabels:
-      app: miniflux
-      name: postgres
+      <<: *labels
   template:
     metadata:
       labels:
-        app: miniflux
-        name: postgres
+        <<: *labels
     spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: miniflux-postgres--data
+            claimName: miniflux-postgres-data
       containers:
         - name: postgres
           image: postgres:15

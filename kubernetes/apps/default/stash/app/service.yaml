@@ -3,8 +3,9 @@ kind: Service
 metadata:
   name: stash
   labels:
-    app.kubernetes.io/instance: stash
+    app.kubernetes.io/part-of: stash
     app.kubernetes.io/name: stash
+    app.kubernetes.io/component: server
 spec:
   type: ClusterIP
   ports:
@@ -13,5 +14,6 @@ spec:
       targetPort: http
       name: http
   selector:
-    app.kubernetes.io/instance: stash
+    app.kubernetes.io/part-of: stash
     app.kubernetes.io/name: stash
+    app.kubernetes.io/component: server

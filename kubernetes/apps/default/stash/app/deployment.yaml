@@ -2,21 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: stash
-  labels:
-    app.kubernetes.io/instance: stash
+  labels: &labels
+    app.kubernetes.io/part-of: stash
     app.kubernetes.io/name: stash
+    app.kubernetes.io/component: server
 spec:
   replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app.kubernetes.io/instance: stash
-      app.kubernetes.io/name: stash
+      <<: *labels
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: stash
-        app.kubernetes.io/name: stash
+        <<: *labels
     spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 10
