@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflared-config
+data:
+  config.yaml: |
+    tunnel: 7d6bc292-c753-414f-9480-1213f896319e
+    credentials-file: /etc/cloudflared/creds/credentials.json
+    metrics: 0.0.0.0:2000
+    no-autoupdate: true
+    ingress:
+    - hostname: "*.fadhlika.com"
+      service: https://192.168.2.202:443
+      originRequest:
+        originServerName: external.fadhlika.com
+        noTLSVerify: true
+    - hostname: hello.fadhlika.com
+      service: hello_world
+    - service: http_status:404
