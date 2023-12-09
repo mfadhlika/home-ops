@@ -4,7 +4,7 @@ metadata:
   name: adguardhome-tcp
   annotations:
     metallb.universe.tf/allow-shared-ip: "adguardhome"
-    metallb.universe.tf/loadBalancerIPs: 192.168.2.202
+    metallb.universe.tf/loadBalancerIPs: 192.168.2.207
   labels:
     app.kubernetes.io/part-of: adguardhome
     app.kubernetes.io/name: adguardhome
@@ -29,7 +29,7 @@ metadata:
   name: adguardhome-udp
   annotations:
     metallb.universe.tf/allow-shared-ip: "adguardhome"
-    metallb.universe.tf/loadBalancerIPs: 192.168.2.202
+    metallb.universe.tf/loadBalancerIPs: 192.168.2.207
   labels:
     app.kubernetes.io/part-of: adguardhome
     app.kubernetes.io/name: adguardhome

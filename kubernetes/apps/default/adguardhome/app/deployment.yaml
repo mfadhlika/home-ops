@@ -24,6 +24,9 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: adguardhome-data
+        - name: certs
+          secret:
+            secretName: adguardhome-tls
       containers:
         - name: adguardhome
           image: adguard/adguardhome:latest
@@ -48,3 +51,6 @@ spec:
             - name: data
               mountPath: /opt/adguardhome/conf
               subPath: conf
+            - name: certs
+              mountPath: /etc/certs
+              readOnly: true
