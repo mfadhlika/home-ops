@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: vaultwarden
   labels:
-    app.kubernetes.io/instance: vaultwarden
+    app.kubernetes.io/part-of: vaultwarden
     app.kubernetes.io/name: vaultwarden
 spec:
   type: ClusterIP
   selector:
-    app.kubernetes.io/instance: vaultwarden
+    app.kubernetes.io/part-of: vaultwarden
     app.kubernetes.io/name: vaultwarden
   ports:
     - name: http

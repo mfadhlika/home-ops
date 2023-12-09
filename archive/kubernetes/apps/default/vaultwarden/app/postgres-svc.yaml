@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: vaultwarden-postgres
   labels:
-    app.kubernetes.io/instance: vaultwarden
+    app.kubernetes.io/part-of: vaultwarden
     app.kubernetes.io/name: postgres
     role: primary
 spec:
@@ -13,7 +13,7 @@ spec:
       name: postgres-port
   type: ClusterIP
   selector:
-    app.kubernetes.io/instance: vaultwarden
+    app.kubernetes.io/part-of: vaultwarden
     app.kubernetes.io/name: postgres
 ---
 apiVersion: v1
@@ -21,7 +21,7 @@ kind: Service
 metadata:
   name: vaultwarden-postgres-headless
   labels:
-    app.kubernetes.io/instance: vaultwarden
+    app.kubernetes.io/part-of: vaultwarden
     app.kubernetes.io/name: postgres
 spec:
   ports:
@@ -30,5 +30,5 @@ spec:
       name: postgres-port
   clusterIP: None
   selector:
-    app.kubernetes.io/instance: vaultwarden
+    app.kubernetes.io/part-of: vaultwarden
     app.kubernetes.io/name: postgres

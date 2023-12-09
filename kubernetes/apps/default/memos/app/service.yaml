@@ -3,11 +3,13 @@ kind: Service
 metadata:
   name: memos
   labels:
-    app: memos
+    app.kubernetes.io/part-of: memos
+    app.kubernetes.io/name: memos
 spec:
   type: ClusterIP
   selector:
-    app: memos
+    app.kubernetes.io/part-of: memos
+    app.kubernetes.io/name: memos
   ports:
     - name: http
       port: 5230

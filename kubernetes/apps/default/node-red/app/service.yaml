@@ -3,13 +3,15 @@ kind: Service
 metadata:
   name: node-red
   labels:
-    app.kubernetes.io/instance: node-red
+    app.kubernetes.io/part-of: node-red
     app.kubernetes.io/name: node-red
+    app.kubernetes.io/component: server
 spec:
   type: ClusterIP
   selector:
-    app.kubernetes.io/instance: node-red
+    app.kubernetes.io/part-of: node-red
     app.kubernetes.io/name: node-red
+    app.kubernetes.io/component: server
   ports:
     - protocol: TCP
       port: 80

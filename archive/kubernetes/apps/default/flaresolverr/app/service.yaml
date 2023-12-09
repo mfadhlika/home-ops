@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: flaresolverr
   labels:
-    app.kubernetes.io/instance: flaresolverr
+    app.kubernetes.io/part-of: flaresolverr
     app.kubernetes.io/name: flaresolverr
 spec:
   type: ClusterIP
   selector:
-    app.kubernetes.io/instance: flaresolverr
+    app.kubernetes.io/part-of: flaresolverr
     app.kubernetes.io/name: flaresolverr
   ports:
     - name: http

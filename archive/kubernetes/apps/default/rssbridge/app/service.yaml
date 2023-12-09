@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: rssbridge
   labels:
-    app.kubernetes.io/instance: rssbridge
+    app.kubernetes.io/part-of: rssbridge
     app.kubernetes.io/name: rssbridge
 spec:
   type: ClusterIP
   selector:
-    app.kubernetes.io/instance: rssbridge
+    app.kubernetes.io/part-of: rssbridge
     app.kubernetes.io/name: rssbridge
   ports:
     - name: http

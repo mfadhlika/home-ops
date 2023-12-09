@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: flaresolverr
   labels:
-    app.kubernetes.io/instance: flaresolverr
+    app.kubernetes.io/part-of: flaresolverr
     app.kubernetes.io/name: flaresolverr
 spec:
   replicas: 1
@@ -11,12 +11,12 @@ spec:
   serviceName: "flaresolverr"
   selector:
     matchLabels:
-      app.kubernetes.io/instance: flaresolverr
+      app.kubernetes.io/part-of: flaresolverr
       app.kubernetes.io/name: flaresolverr
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: flaresolverr
+        app.kubernetes.io/part-of: flaresolverr
         app.kubernetes.io/name: flaresolverr
     spec:
       restartPolicy: Always

@@ -2,18 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tvheadend
-  labels:
-    app: tvheadend
+  labels: &labels
+    app.kubernetes.io/part-of: tvheadend
+    app.kubernetes.io/name: tvheadend
+    app.kubernetes.io/component: server
 spec:
   replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: tvheadend
+      <<: *labels
   template:
     metadata:
       labels:
-        app: tvheadend
+        <<: *labels
     spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 10

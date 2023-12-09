@@ -3,13 +3,15 @@ kind: Service
 metadata:
   name: tanoshi
   labels:
-    app.kubernetes.io/instance: tanoshi
+    app.kubernetes.io/part-of: tanoshi
     app.kubernetes.io/name: tanoshi
+    app.kubernetes.io/component: server
 spec:
   type: ClusterIP
   selector:
-    app.kubernetes.io/instance: tanoshi
+    app.kubernetes.io/part-of: tanoshi
     app.kubernetes.io/name: tanoshi
+    app.kubernetes.io/component: server
   ports:
     - protocol: TCP
       port: 80

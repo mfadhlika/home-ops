@@ -3,13 +3,15 @@ kind: Service
 metadata:
   name: changedetection
   labels:
-    app.kubernetes.io/instance: changedetection
+    app.kubernetes.io/part-of: changedetection
     app.kubernetes.io/name: changedetection
+    app.kubernetes.io/component: server
 spec:
   type: ClusterIP
   selector:
-    app.kubernetes.io/instance: changedetection
+    app.kubernetes.io/part-of: changedetection
     app.kubernetes.io/name: changedetection
+    app.kubernetes.io/component: server
   ports:
     - name: http
       protocol: TCP

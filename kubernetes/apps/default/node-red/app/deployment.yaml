@@ -2,21 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: node-red
-  labels:
-    app.kubernetes.io/instance: node-red
+  labels: &labels
+    app.kubernetes.io/part-of: node-red
     app.kubernetes.io/name: node-red
+    app.kubernetes.io/component: server
 spec:
   replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app.kubernetes.io/instance: node-red
-      app.kubernetes.io/name: node-red
+      <<: *labels
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: node-red
-        app.kubernetes.io/name: node-red
+        <<: *labels
     spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 10
@@ -44,8 +43,6 @@ spec:
           env:
             - name: TZ
               value: Asia/Jakarta
-            - name: OS_CREDENTIAL_PATH
-              value: /config/oci_config
           ports:
             - containerPort: 1880
               name: http

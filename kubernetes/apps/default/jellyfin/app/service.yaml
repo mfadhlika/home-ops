@@ -3,15 +3,17 @@ kind: Service
 metadata:
   name: jellyfin-tcp
   labels:
-    app.kubernetes.io/instance: jellyfin
+    app.kubernetes.io/part-of: jellyfin
     app.kubernetes.io/name: jellyfin
+    app.kubernetes.io/component: server
   annotations:
     metallb.universe.tf/loadBalancerIPs: 192.168.2.205
 spec:
   type: LoadBalancer
   selector:
-    app.kubernetes.io/instance: jellyfin
+    app.kubernetes.io/part-of: jellyfin
     app.kubernetes.io/name: jellyfin
+    app.kubernetes.io/component: server
   ports:
     - protocol: TCP
       port: 8096

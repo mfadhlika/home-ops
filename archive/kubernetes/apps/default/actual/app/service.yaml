@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: actual
   labels:
-    app.kubernetes.io/instance: actual
+    app.kubernetes.io/part-of: actual
     app.kubernetes.io/name: actual
 spec:
   type: ClusterIP
   selector:
-    app.kubernetes.io/instance: actual
+    app.kubernetes.io/part-of: actual
     app.kubernetes.io/name: actual
   ports:
     - protocol: TCP
