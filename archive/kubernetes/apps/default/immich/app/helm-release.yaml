@@ -41,7 +41,7 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt"
           kubernetes.io/ingress.class: "traefik"
-          external-dns/is-public: "true"
+
         hosts:
           - host: immich.fadhlika.com
             paths:
