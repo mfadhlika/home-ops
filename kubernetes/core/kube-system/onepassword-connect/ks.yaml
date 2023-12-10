@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets
   path: ./kubernetes/core/kube-system/onepassword-connect/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system

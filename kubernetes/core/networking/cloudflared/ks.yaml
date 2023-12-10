@@ -10,7 +10,7 @@ spec:
     - name: external-dns
     - name: ingress-nginx
   path: ./kubernetes/core/networking/cloudflared/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
