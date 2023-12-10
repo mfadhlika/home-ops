@@ -6,7 +6,7 @@ metadata:
   name: cert-manager-crds
   namespace: flux-system
 spec:
-  path: ./kubernetes/core/networking/cert-manager/crds
+  path: ./kubernetes/apps/networking/cert-manager/crds
   prune: false
   sourceRef:
     kind: GitRepository
@@ -26,7 +26,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
     - name: cert-manager-crds
-  path: ./kubernetes/core/networking/cert-manager/app
+  path: ./kubernetes/apps/networking/cert-manager/app
   prune: false
   sourceRef:
     kind: GitRepository

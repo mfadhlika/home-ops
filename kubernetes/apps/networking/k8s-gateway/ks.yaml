@@ -3,10 +3,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: nvidia-device-plugin
+  name: k8s-gateway
   namespace: flux-system
 spec:
-  path: ./kubernetes/core/kube-system/nvidia-device-plugin/app
+  path: ./kubernetes/apps/networking/k8s-gateway/app
   prune: false
   sourceRef:
     kind: GitRepository
