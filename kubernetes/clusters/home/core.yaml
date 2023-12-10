@@ -12,7 +12,7 @@ spec:
   timeout: 3m0s
   retryInterval: 2m0s
   path: ./kubernetes/core
-  prune: true
+  prune: false
   force: true
   sourceRef:
     kind: GitRepository
