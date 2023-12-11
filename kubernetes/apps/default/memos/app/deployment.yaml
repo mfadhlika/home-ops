@@ -24,8 +24,8 @@ spec:
             claimName: memos-data
       containers:
         - name: memos
-          image: ghcr.io/usememos/memos:0.17.0
-          imagePullPolicy: Always
+          image: ghcr.io/usememos/memos:0.18.0
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5230
               name: http
