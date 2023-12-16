@@ -23,6 +23,5 @@ spec:
     gfd:
       enabled: true
     migStrategy: "none"
-    failOnInitError: true
     nvidiaDriverRoot: "/"
     runtimeClassName: nvidia
