@@ -1,0 +1,53 @@
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: devbox
+  labels: &labels
+    kubevirt.io/os: linux
+    kubevirt.io/domain: devbox
+    app.kubernetes.io/part-of: devbox
+    app.kubernetes.io/name: devbox
+spec:
+  runStrategy: Manual
+  template:
+    metadata:
+      labels:
+        <<: *labels
+    spec:
+      domain:
+        cpu:
+          cores: 2
+        devices:
+          disks:
+            - name: disk0
+              disk:
+                bus: virtio
+            - name: cloudinitdisk
+              cdrom:
+                bus: sata
+                readonly: true
+          interfaces:
+            - name: default
+              masquerade: {}
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 4Gi
+      networks:
+        - name: default
+          pod: {}
+      volumes:
+        - name: disk0
+          persistentVolumeClaim:
+            claimName: fedora
+        - cloudInitNoCloud:
+            userData: |
+              #cloud-config
+              hostname: devbox
+              ssh_pwauth: false
+              disable_root: true
+              ssh_authorized_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfxVzuuZ/TNqlGjCVCFDTNP3VFAmFOVrjpoEv5p8ZhH0hEdxCJPmckVJEKK/oOSP94COyQTLifxam+407giJ/WfmDqGwHdxXC6wK6L+gLcIZu0TVNwkuCiTw3bZJgruKFZ0Eq0LPEDrgTXKknTp4psjUq1OwxBFpDSyZoXatlyVssq2i+5kZyB1S6Abuc+j6G3J7UtIFdn2mQVhgZpLoJnZIU1AL5Z/oBdSu22KSPG7+6BeLGJJx8GXT47Ii8PomJNn+n6VU+DN35l+cYGOrWo2rHbE/a74EBeCVTEKtaJUdHEqAVz+Nn3v1e5PJsQIFz7bkncvD4JAbOo7LMymlH5
+          name: cloudinitdisk

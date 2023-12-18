@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - adguardhome/ks.yaml
   - changedetection/ks.yaml
+  - devbox/ks.yaml
   - jellyfin/ks.yaml
   - memos/ks.yaml
   - miniflux/ks.yaml
