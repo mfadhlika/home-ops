@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hydrus-network-client
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: 192.168.2.208
+  labels:
+    app.kubernetes.io/part-of: hydrus-network
+    app.kubernetes.io/name: hydrus-network-client
+    app.kubernetes.io/component: client
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/part-of: hydrus-network
+    app.kubernetes.io/name: hydrus-network-client
+    app.kubernetes.io/component: client
+  ports:
+    - name: novnc
+      port: 5800
+      targetPort: novnc
+    - name: vnc
+      port: 5900
+      targetPort: vnc
+    - name: booru
+      port: 45868
+      targetPort: booru
+    - name: api
+      port: 45869
+      targetPort: api
