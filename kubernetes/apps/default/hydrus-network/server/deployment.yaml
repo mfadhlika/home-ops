@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hydrus-network-server
+  labels: &labels
+    app.kubernetes.io/part-of: hydrus-network
+    app.kubernetes.io/name: hydrus-network-server
+    app.kubernetes.io/component: server
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      <<: *labels
+  template:
+    metadata:
+      labels:
+        <<: *labels
+    spec:
+      restartPolicy: Always
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: hydrus-network-server-data
+      containers:
+        - name: hydrus-network-server
+          image: ghcr.io/hydrusnetwork/hydrus:server
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: data
+              mountPath: /opt/hydrus/db

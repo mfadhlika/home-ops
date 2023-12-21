@@ -1,0 +1,56 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: hydrus-network-stripprefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /web
+      - /booru
+      - /api
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hydrus-network
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/router.middlewares: default-hydrus-network-stripprefix@kubernetescrd
+spec:
+  rules:
+    - host: hydrus.fadhlika.com
+      http:
+        paths:
+          - path: /web
+            pathType: Prefix
+            backend:
+              service:
+                name: hydrus-network-web
+                port:
+                  name: http
+          - path: /novnc
+            pathType: Prefix
+            backend:
+              service:
+                name: hydrus-network-client
+                port:
+                  name: novnc
+          - path: /booru
+            pathType: Prefix
+            backend:
+              service:
+                name: hydrus-network-client
+                port:
+                  name: booru
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: hydrus-network-client
+                port:
+                  name: api
+  tls:
+    - secretName: hydrus-network-web-tls
+      hosts:
+        - hydrus.fadhlika.com

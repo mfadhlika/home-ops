@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hydrus-network-web
+  labels:
+    app.kubernetes.io/part-of: hydrus-network
+    app.kubernetes.io/name: hydrus-network-web
+    app.kubernetes.io/component: web
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/part-of: hydrus-network
+    app.kubernetes.io/name: hydrus-network-web
+    app.kubernetes.io/component: web
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
