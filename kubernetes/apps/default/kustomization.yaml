@@ -10,6 +10,7 @@ resources:
   - node-red/ks.yaml
   - radarr/ks.yaml
   - sonarr/ks.yaml
+  - sakamata/ks.yaml
   - stash/ks.yaml
   - szurubooru/ks.yaml
   - tanoshi/ks.yaml

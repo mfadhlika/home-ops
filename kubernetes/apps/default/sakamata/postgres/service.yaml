@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sakamata-postgres
+  labels:
+    app.kubernetes.io/part-of: sakamata
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/component: database
+spec:
+  ports:
+    - port: 5432
+      protocol: TCP
+      name: postgres-port
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/part-of: sakamata
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/component: database
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sakamata-postgres-headless
+  labels:
+    app.kubernetes.io/part-of: sakamata
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/component: database
+spec:
+  ports:
+    - port: 5432
+      protocol: TCP
+      name: postgres-port
+  clusterIP: None
+  selector:
+    app.kubernetes.io/part-of: sakamata
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/component: database
