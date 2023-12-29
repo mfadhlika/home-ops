@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sakamata
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+    - host: sakamata.fadhlika.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sakamata
+                port:
+                  name: http
+  tls:
+    - secretName: sakamata-tls
+      hosts:
+        - sakamata.fadhlika.com

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sakamata
+  labels:
+    app.kubernetes.io/part-of: sakamata
+    app.kubernetes.io/name: sakamata
+    app.kubernetes.io/component: server
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/part-of: sakamata
+    app.kubernetes.io/name: sakamata
+    app.kubernetes.io/component: server
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
