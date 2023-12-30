@@ -1,6 +1,24 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: adguardhome-http
+  labels:
+    app.kubernetes.io/part-of: adguardhome
+    app.kubernetes.io/name: adguardhome
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: http
+      name: http
+  selector:
+    app.kubernetes.io/part-of: adguardhome
+    app.kubernetes.io/name: adguardhome
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: adguardhome-tcp
   annotations:
     metallb.universe.tf/allow-shared-ip: "adguardhome"
@@ -10,15 +28,12 @@ metadata:
     app.kubernetes.io/name: adguardhome
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
     - name: dnstcp
       protocol: TCP
       port: 53
       targetPort: dnstcp
-    - protocol: TCP
-      port: 3000
-      targetPort: http
-      name: http
   selector:
     app.kubernetes.io/part-of: adguardhome
     app.kubernetes.io/name: adguardhome
@@ -35,6 +50,7 @@ metadata:
     app.kubernetes.io/name: adguardhome
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
     - name: dnsudp
       protocol: UDP
