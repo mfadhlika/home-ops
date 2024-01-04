@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: syncthing
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+    - host: syncthing.fadhlika.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: syncthing-tcp
+                port:
+                  name: webui
+  tls:
+    - secretName: syncthing-tls
+      hosts:
+        - syncthing.fadhlika.com

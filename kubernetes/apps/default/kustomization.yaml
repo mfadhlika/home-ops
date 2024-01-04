@@ -12,6 +12,7 @@ resources:
   - sonarr/ks.yaml
   - sakamata/ks.yaml
   - stash/ks.yaml
+  - syncthing/ks.yaml
   - szurubooru/ks.yaml
   - tanoshi/ks.yaml
   - transmission/ks.yaml
