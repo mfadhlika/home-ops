@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nitter-redis
+  labels:
+    app.kubernetes.io/part-of: nitter
+    app.kubernetes.io/name: redis
+    app.kubernetes.io/component: database
+spec:
+  ports:
+    - port: 6379
+      protocol: TCP
+      name: redis-port
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/part-of: nitter
+    app.kubernetes.io/name: redis
+    app.kubernetes.io/component: database
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nitter-redis-headless
+  labels:
+    app.kubernetes.io/part-of: nitter
+    app.kubernetes.io/name: redis
+    app.kubernetes.io/component: database
+spec:
+  ports:
+    - port: 6379
+      protocol: TCP
+      name: redis-port
+  clusterIP: None
+  selector:
+    app.kubernetes.io/part-of: nitter
+    app.kubernetes.io/name: redis
+    app.kubernetes.io/component: database

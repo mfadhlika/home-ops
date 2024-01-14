@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nitter
+  labels: &labels
+    app.kubernetes.io/part-of: nitter
+    app.kubernetes.io/name: nitter
+    app.kubernetes.io/component: server
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      <<: *labels
+  template:
+    metadata:
+      labels:
+        <<: *labels
+    spec:
+      restartPolicy: Always
+      volumes:
+        - name: secret
+          secret:
+            secretName: nitter-secret
+      containers:
+        - name: nitter
+          image: zedeus/nitter:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+                [
+                  "wget",
+                  "-nv",
+                  "--tries=1",
+                  "--spider",
+                  "http://127.0.0.1:8080/Jack/status/20",
+                  "||",
+                  "exit",
+                  "1",
+                ]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: secret
+              mountPath: /src/nitter.conf
+              subPath: nitter.conf
+              readOnly: true

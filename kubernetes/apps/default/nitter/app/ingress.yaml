@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nitter
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+    - host: nitter.fadhlika.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nitter
+                port:
+                  name: http
+  tls:
+    - secretName: nitter-tls
+      hosts:
+        - nitter.fadhlika.com
