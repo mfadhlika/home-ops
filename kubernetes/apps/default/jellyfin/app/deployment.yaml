@@ -30,7 +30,7 @@ spec:
             claimName: jellyfin-config
         - name: transcodes
           emptyDir:
-            sizeLimit: 1Gi
+            sizeLimit: 2Gi
             medium: Memory
       containers:
         - name: jellyfin
