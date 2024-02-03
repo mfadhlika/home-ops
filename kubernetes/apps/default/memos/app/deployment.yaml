@@ -22,6 +22,10 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: memos-data
+        - name: storage
+          hostPath:
+            path: /mnt/storage/apps/memos
+            type: Directory
       containers:
         - name: memos
           image: ghcr.io/usememos/memos:0.19.1
@@ -35,3 +39,5 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /var/opt/memos
+            - name: storage
+              mountPath: /storage
