@@ -25,11 +25,18 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: rssbridge-data
+        - name: config
+          configMap:
+            name: rssbridge-config
       containers:
         - name: rssbridge
           image: rssbridge/rss-bridge:latest
           imagePullPolicy: Always
           volumeMounts:
+            - name: config
+              mountPath: /app/config.ini.php
+              subPath: config.ini.php
+              readOnly: true
             - name: data
               mountPath: /config
           ports:
