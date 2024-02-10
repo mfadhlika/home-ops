@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: linkding
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+    - host: linkding.fadhlika.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: linkding
+                port:
+                  name: http
+  tls:
+    - secretName: linkding-tls
+      hosts:
+        - linkding.fadhlika.com
