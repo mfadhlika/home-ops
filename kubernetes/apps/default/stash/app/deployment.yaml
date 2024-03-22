@@ -24,6 +24,9 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: stash-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: stash-data
         - name: storage
           hostPath:
             path: /mnt/storage
@@ -42,7 +45,7 @@ spec:
             - name: STASH_CACHE
               value: /data/cache/
             - name: STASH_PORT
-              value: "9999"
+              value: '9999'
             - name: STASH_EXTERNAL_HOST
               value: https://stash.fadhlika.com
             - name: NVIDIA_DRIVER_CAPABILITIES
@@ -57,9 +60,8 @@ spec:
             - name: storage
               mountPath: /stash
               subPath: stash
-            - name: storage
+            - name: data
               mountPath: /data
-              subPath: apps/stash
             - name: config
               mountPath: /root/.stash
           resources:
