@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent
+  labels: &labels
+    app.kubernetes.io/part-of: qbittorrent
+    app.kubernetes.io/name: qbittorrent
+    app.kubernetes.io/component: server
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      <<: *labels
+  template:
+    metadata:
+      labels:
+        <<: *labels
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: qbittorrent-config
+        - name: share
+          hostPath:
+            path: /mnt/storage/downloads
+            type: Directory
+      containers:
+        - name: qbittorrent
+          image: lscr.io/linuxserver/qbittorrent:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+            - containerPort: 6881
+              name: torrent-tcp
+              protocol: TCP
+            - containerPort: 6881
+              name: torrent-udp
+              protocol: UDP
+          env:
+            - name: TZ
+              value: Asia/Jakarta
+            - name: PUID
+              value: '1000'
+            - name: PGID
+              value: '1000'
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: share
+              mountPath: /downloads
