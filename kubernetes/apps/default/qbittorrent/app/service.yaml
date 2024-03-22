@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbittorrent
+  labels:
+    app.kubernetes.io/part-of: qbittorrent
+    app.kubernetes.io/name: qbittorrent
+    app.kubernetes.io/component: server
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/part-of: qbittorrent
+    app.kubernetes.io/name: qbittorrent
+    app.kubernetes.io/component: server
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbittorrent-tcp
+  annotations:
+    metallb.universe.tf/allow-shared-ip: 'qbittorrent'
+    metallb.universe.tf/loadBalancerIPs: 192.168.2.209
+  labels:
+    app.kubernetes.io/part-of: qbittorrent
+    app.kubernetes.io/name: qbittorrent
+    app.kubernetes.io/component: server
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/part-of: qbittorrent
+    app.kubernetes.io/name: qbittorrent
+    app.kubernetes.io/component: server
+  ports:
+    - protocol: TCP
+      port: 6881
+      targetPort: torrent-tcp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbittorrent-udp
+  annotations:
+    metallb.universe.tf/allow-shared-ip: 'qbittorrent'
+    metallb.universe.tf/loadBalancerIPs: 192.168.2.209
+  labels:
+    app.kubernetes.io/part-of: qbittorrent
+    app.kubernetes.io/name: qbittorrent
+    app.kubernetes.io/component: server
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/part-of: qbittorrent
+    app.kubernetes.io/name: qbittorrent
+    app.kubernetes.io/component: server
+  ports:
+    - protocol: UDP
+      port: 6881
+      targetPort: torrent-udp

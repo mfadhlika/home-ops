@@ -9,6 +9,7 @@ resources:
   - memos/ks.yaml
   - miniflux/ks.yaml
   - node-red/ks.yaml
+  - qbittorrent/ks.yaml
   - rssbridge/ks.yaml
   - sonarr/ks.yaml
   - sakamata/ks.yaml
