@@ -9,7 +9,7 @@ metadata:
 spec:
   replicas: 1
   revisionHistoryLimit: 0
-  serviceName: "sonarr"
+  serviceName: 'sonarr'
   selector:
     matchLabels:
       <<: *labels
@@ -24,7 +24,7 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: sonarr-config
-        - name: share
+        - name: storage
           hostPath:
             path: /mnt/storage
             type: Directory
@@ -39,11 +39,15 @@ spec:
             - name: TZ
               value: Asia/Jakarta
             - name: PUID
-              value: "1000"
+              value: '1000'
             - name: PGID
-              value: "1000"
+              value: '1000'
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: share
-              mountPath: /share
+            - name: storage
+              mountPath: /downloads
+              subPath: downloads
+            - name: storage
+              mountPath: /media
+              subPath: media
