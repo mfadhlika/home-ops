@@ -36,11 +36,11 @@ spec:
                   name: miniflux-postgres-secret
                   key: db_password
             - name: DATABASE_URL
-              value: "postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST)/$(POSTGRES_USER)?sslmode=disable"
+              value: 'postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST)/$(POSTGRES_USER)?sslmode=disable'
             - name: RUN_MIGRATIONS
-              value: "1"
+              value: '1'
             - name: CREATE_ADMIN
-              value: "1"
+              value: '1'
             - name: ADMIN_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -55,7 +55,7 @@ spec:
               value: https://miniflux.fadhlika.com
           livenessProbe:
             exec:
-              command: ["CMD", "/usr/bin/miniflux", "-healthcheck", "auto"]
+              command: ['/usr/bin/miniflux', '-healthcheck', 'auto']
             initialDelaySeconds: 30
             periodSeconds: 10
           ports:
