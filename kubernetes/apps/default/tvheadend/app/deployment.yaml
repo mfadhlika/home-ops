@@ -19,6 +19,7 @@ spec:
     spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 10
+      runtimeClassName: nvidia
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -32,11 +33,15 @@ spec:
             path: /dev/dvb
       containers:
         - name: tvheadend
-          image: lscr.io/linuxserver/tvheadend:latest
+          image: gee1/tvheadend:latest
           imagePullPolicy: Always
           env:
             - name: TZ
               value: Asia/Jakarta
+            - name: NVIDIA_DRIVER_CAPABILITIES
+              value: all
+            - name: NVIDIA_VISIBLE_DEVICES
+              value: all
           ports:
             - containerPort: 9981
               protocol: TCP
@@ -53,5 +58,8 @@ spec:
               mountPath: /dev/dvb
           securityContext:
             privileged: true
+          resources:
+            limits:
+              nvidia.com/gpu.shared: 1 # requesting 1 GPU
       nodeSelector:
-        feature.node.kubernetes.io/usb-ff_0572_689a.present: "true"
+        feature.node.kubernetes.io/usb-ff_0572_689a.present: 'true'
