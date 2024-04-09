@@ -5,11 +5,13 @@ metadata:
   labels:
     app.kubernetes.io/part-of: flaresolverr
     app.kubernetes.io/name: flaresolverr
+    app.kubernetes.io/component: server
 spec:
   type: ClusterIP
   selector:
     app.kubernetes.io/part-of: flaresolverr
     app.kubernetes.io/name: flaresolverr
+    app.kubernetes.io/component: server
   ports:
     - name: http
       protocol: TCP
