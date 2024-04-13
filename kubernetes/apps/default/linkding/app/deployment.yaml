@@ -24,7 +24,7 @@ spec:
             claimName: memos-data
       containers:
         - name: linkding
-          image: sissbruecker/linkding:latest-alpine
+          image: sissbruecker/linkding:latest-plus
           imagePullPolicy: Always
           env:
             - name: LD_DB_ENGINE
