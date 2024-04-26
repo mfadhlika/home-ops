@@ -15,5 +15,6 @@ resources:
   - sonarr/ks.yaml
   - sakamata/ks.yaml
   - stash/ks.yaml
+  - szurubooru/ks.yaml
   - tvheadend/ks.yaml
   - valheim-server/ks.yaml
