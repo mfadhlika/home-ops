@@ -2,10 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: memos
-  labels:
-    labels: &labels
-      app.kubernetes.io/part-of: memos
-      app.kubernetes.io/name: memos
+  labels: &labels
+    app.kubernetes.io/part-of: memos
+    app.kubernetes.io/name: memos
 spec:
   replicas: 1
   revisionHistoryLimit: 0
@@ -35,7 +34,7 @@ spec:
               name: http
           env:
             - name: MEMOS_PORT
-              value: "5230"
+              value: '5230'
           volumeMounts:
             - name: data
               mountPath: /var/opt/memos
