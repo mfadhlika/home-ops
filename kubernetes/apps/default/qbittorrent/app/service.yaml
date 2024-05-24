@@ -31,6 +31,7 @@ metadata:
     app.kubernetes.io/component: server
 spec:
   type: LoadBalancer
+  loadBalancerClass: metallb
   selector:
     app.kubernetes.io/part-of: qbittorrent
     app.kubernetes.io/name: qbittorrent
@@ -53,6 +54,7 @@ metadata:
     app.kubernetes.io/component: server
 spec:
   type: LoadBalancer
+  loadBalancerClass: metallb
   selector:
     app.kubernetes.io/part-of: qbittorrent
     app.kubernetes.io/name: qbittorrent

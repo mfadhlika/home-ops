@@ -19,8 +19,9 @@ spec:
     ttl: 1
     service:
       type: LoadBalancer
+      loadBalancerClass: metallb
       annotations:
-        metallb.universe.tf/loadBalancerIPs: "192.168.2.201"
+        metallb.universe.tf/loadBalancerIPs: '192.168.2.201'
       externalTrafficPolicy: Local
       port: 53
     domain: fadhlika.com

@@ -23,7 +23,7 @@ kind: Service
 metadata:
   name: transmission-tcp
   annotations:
-    metallb.universe.tf/allow-shared-ip: "transmission"
+    metallb.universe.tf/allow-shared-ip: 'transmission'
     metallb.universe.tf/loadBalancerIPs: 192.168.2.204
   labels:
     app.kubernetes.io/part-of: transmission
@@ -31,6 +31,7 @@ metadata:
     app.kubernetes.io/component: server
 spec:
   type: LoadBalancer
+  loadBalancerClass: metallb
   selector:
     app.kubernetes.io/part-of: transmission
     app.kubernetes.io/name: transmission
@@ -45,7 +46,7 @@ kind: Service
 metadata:
   name: transmission-udp
   annotations:
-    metallb.universe.tf/allow-shared-ip: "transmission"
+    metallb.universe.tf/allow-shared-ip: 'transmission'
     metallb.universe.tf/loadBalancerIPs: 192.168.2.204
   labels:
     app.kubernetes.io/part-of: transmission
@@ -53,6 +54,7 @@ metadata:
     app.kubernetes.io/component: server
 spec:
   type: LoadBalancer
+  loadBalancerClass: metallb
   selector:
     app.kubernetes.io/part-of: transmission
     app.kubernetes.io/name: transmission

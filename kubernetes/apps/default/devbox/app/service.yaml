@@ -11,6 +11,7 @@ metadata:
     coredns.io/hostname: devbox.fadhlika.com
 spec:
   type: LoadBalancer
+  loadBalancerClass: metallb
   externalTrafficPolicy: Cluster
   selector:
     kubevirt.io/os: linux

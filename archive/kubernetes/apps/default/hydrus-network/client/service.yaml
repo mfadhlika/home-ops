@@ -11,6 +11,7 @@ metadata:
     app.kubernetes.io/component: client
 spec:
   type: LoadBalancer
+  loadBalancerClass: metallb
   selector:
     app.kubernetes.io/part-of: hydrus-network
     app.kubernetes.io/name: hydrus-network-client

@@ -12,3 +12,4 @@ spec:
     service:
       spec:
         externalTrafficPolicy: Local
+        loadBalancerClass: metallb

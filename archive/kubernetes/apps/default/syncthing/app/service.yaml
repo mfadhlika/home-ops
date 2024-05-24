@@ -3,13 +3,14 @@ kind: Service
 metadata:
   name: syncthing-tcp
   annotations:
-    metallb.universe.tf/allow-shared-ip: "syncthing"
+    metallb.universe.tf/allow-shared-ip: 'syncthing'
     metallb.universe.tf/loadBalancerIPs: 192.168.2.208
   labels:
     app.kubernetes.io/part-of: syncthing
     app.kubernetes.io/name: syncthing
 spec:
   type: LoadBalancer
+  loadBalancerClass: metallb
   externalTrafficPolicy: Local
   selector:
     app.kubernetes.io/part-of: syncthing
@@ -29,13 +30,14 @@ kind: Service
 metadata:
   name: syncthing-udp
   annotations:
-    metallb.universe.tf/allow-shared-ip: "syncthing"
+    metallb.universe.tf/allow-shared-ip: 'syncthing'
     metallb.universe.tf/loadBalancerIPs: 192.168.2.208
   labels:
     app.kubernetes.io/part-of: syncthing
     app.kubernetes.io/name: syncthing
 spec:
   type: LoadBalancer
+  loadBalancerClass: metallb
   externalTrafficPolicy: Local
   selector:
     app.kubernetes.io/part-of: syncthing
