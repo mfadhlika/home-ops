@@ -15,6 +15,7 @@ resources:
   - k8s-gateway.yaml
   - local-path-provisioner.yaml
   - longhorn.yaml
+  - metallb.yaml
   - nfd.yaml
   - nvdp.yaml
   - openebs.yaml
