@@ -7,10 +7,10 @@ spec:
   interval: 30m
   chart:
     spec:
-      chart: k8s-gateway
-      version: 2.0.4
+      chart: ./charts/k8s-gateway
+      version: 2.5.0
       sourceRef:
-        kind: HelmRepository
+        kind: GitRepository
         name: k8s-gateway
         namespace: flux-system
       interval: 30m

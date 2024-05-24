@@ -1,8 +1,15 @@
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
+kind: GitRepository
 metadata:
   name: k8s-gateway
 spec:
   interval: 30m
-  url: https://ori-edge.github.io/k8s_gateway/
+  url: https://github.com/mfadhlika/k8s_gateway
+  ref:
+    branch: master
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/charts/k8s-gateway
