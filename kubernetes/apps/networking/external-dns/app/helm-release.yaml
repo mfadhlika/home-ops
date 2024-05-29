@@ -23,7 +23,7 @@ spec:
       - service
       - ingress
     extraArgs:
-      - "--ingress-class=nginx"
+      - '--ingress-class=frp'
     provider: cloudflare
     env:
       - name: CF_API_TOKEN
@@ -32,7 +32,7 @@ spec:
             name: external-dns-cloudflare-secret
             key: cloudflare_api_token
     policy: sync
-    txtPrefix: "k8s."
+    txtPrefix: 'k8s.'
     crd:
       # disabled, pulled from source repo in crds/
       create: false

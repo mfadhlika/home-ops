@@ -3,11 +3,9 @@ kind: Ingress
 metadata:
   name: adguardhome
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt"
-    kubernetes.io/ingress.class: "nginx"
-    external-dns.alpha.kubernetes.io/target: external.fadhlika.com
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    cert-manager.io/cluster-issuer: 'letsencrypt'
 spec:
+  ingressClassName: frp
   rules:
     - host: adguardhome.fadhlika.com
       http:

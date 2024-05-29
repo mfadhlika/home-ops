@@ -1,0 +1,22 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: frp-operator
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: ./charts/frp-operator
+      sourceRef:
+        kind: GitRepository
+        name: frp-operator
+        namespace: flux-system
+  values:
+    operator:
+      serverAddr: '103.150.92.223'
+      serverPort: '7000'
+      authToken:
+        secret:
+          name: frp-secret
+          key: auth_token
