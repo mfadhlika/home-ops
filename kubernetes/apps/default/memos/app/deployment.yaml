@@ -27,7 +27,7 @@ spec:
             type: Directory
       containers:
         - name: memos
-          image: ghcr.io/usememos/memos:0.20.0
+          image: ghcr.io/usememos/memos:0.22.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5230
