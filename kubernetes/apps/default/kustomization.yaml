@@ -7,7 +7,6 @@ resources:
   - flaresolverr/ks.yaml
   - jellyfin/ks.yaml
   - linkding/ks.yaml
-  - memos/ks.yaml
   - miniflux/ks.yaml
   - node-red/ks.yaml
   - qbittorrent/ks.yaml
