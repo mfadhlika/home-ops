@@ -6,11 +6,9 @@ metadata:
     app.kubernetes.io/part-of: valheim-server
     app.kubernetes.io/name: valheim-server
     app.kubernetes.io/component: server
-  annotations:
-    metallb.universe.tf/loadBalancerIPs: 192.168.2.203
 spec:
   type: LoadBalancer
-  loadBalancerClass: metallb
+  loadBalancerClass: frp
   selector:
     app.kubernetes.io/part-of: valheim-server
     app.kubernetes.io/name: valheim-server
