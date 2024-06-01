@@ -21,7 +21,7 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: memos-data
+            claimName: linkding-data
       containers:
         - name: linkding
           image: sissbruecker/linkding:latest
