@@ -10,6 +10,7 @@ resources:
   - external-dns.yaml
   - external-secrets.yaml
   - frp-operator.yaml
+  - grafana.yaml
   - immich.yaml
   - ingress-nginx.yaml
   - jetstack.yaml
@@ -20,6 +21,7 @@ resources:
   - nfd.yaml
   - nvdp.yaml
   - openebs.yaml
+  - prometheus-community.yaml
   - traefik.yaml
   - valheim-k8s.yaml
   - vmware-tanzu.yaml

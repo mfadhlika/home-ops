@@ -1,0 +1,52 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: grafana
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: grafana
+      version: 7.3.11
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: flux-system
+  values:
+    testFramework:
+      enabled: false
+
+    admin:
+      existingSecret: 'grafana-secret'
+      userKey: username
+      passwordKey: password
+
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: 'letsencrypt'
+      path: /
+      pathType: Prefix
+      hosts:
+        - grafana.fadhlika.com
+      tls:
+        - secretName: grafana-tls
+          hosts:
+            - grafana.fadhlika.com
+
+      persistence:
+        type: pvc
+        enabled: true
+
+      datasources:
+        datasources.yaml:
+          apiVersion: 1
+          datasources:
+            - name: Prometheus
+              type: prometheus
+              url: http://prometheus-server
+              isDefault: true
+          deleteDatasources:
+            - name: Prometheus
