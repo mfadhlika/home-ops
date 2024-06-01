@@ -24,9 +24,11 @@ spec:
             claimName: memos-data
       containers:
         - name: linkding
-          image: sissbruecker/linkding:latest-plus
+          image: sissbruecker/linkding:latest
           imagePullPolicy: Always
           env:
+            - name: LD_LOG_X_FORWARDED_FOR
+              value: 'true'
             - name: LD_DB_ENGINE
               value: postgres
             - name: LD_DB_HOST
