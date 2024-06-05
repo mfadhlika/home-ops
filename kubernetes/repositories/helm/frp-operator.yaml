@@ -1,14 +1,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: GitRepository
+kind: HelmRepository
 metadata:
   name: frp-operator
 spec:
   interval: 30m
-  url: https://github.com/mfadhlika/frp-operator
-  ref:
-    branch: main
-  ignore: |
-    # exclude all
-    /*
-    # include charts directory
-    !/charts/
+  url: https://mfadhlika.github.io/frp-operator

@@ -7,12 +7,15 @@ spec:
   interval: 30m
   chart:
     spec:
-      chart: ./charts/frp-operator
+      chart: frp-operator
+      version: 0.1.4
       sourceRef:
-        kind: GitRepository
+        kind: HelmRepository
         name: frp-operator
         namespace: flux-system
   values:
+    image:
+      tag: main
     operator:
       serverAddr: '103.150.92.223'
       serverPort: '7000'
