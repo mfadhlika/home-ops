@@ -4,6 +4,7 @@ resources:
   - adguardhome/ks.yaml
   - changedetection/ks.yaml
   - devbox/ks.yaml
+  - espial/ks.yaml
   - flaresolverr/ks.yaml
   - jellyfin/ks.yaml
   - linkding/ks.yaml

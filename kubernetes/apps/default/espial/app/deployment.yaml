@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: espial
+  labels: &labels
+    app.kubernetes.io/part-of: espial
+    app.kubernetes.io/name: espial
+    app.kubernetes.io/component: server
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      <<: *labels
+  template:
+    metadata:
+      labels:
+        <<: *labels
+    spec:
+      restartPolicy: Always
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: espial-data
+      initContainers:
+        - name: create-user
+          image: jonschoning/espial:espial
+          imagePullPolicy: Always
+          command: ['./migration']
+          args:
+            [
+              'createuser',
+              '--conn',
+              '$(SQLITE_DATABASE)',
+              '--userName',
+              '$(USERNAME)',
+              '--userPassword',
+              '$(PASSWORD)',
+            ]
+          env:
+            - name: SQLITE_DATABASE
+              value: /app/data/espial.sqlite3
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: espial-secret
+                  key: username
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: espial-secret
+                  key: password
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+      containers:
+        - name: espial
+          image: jonschoning/espial:espial
+          imagePullPolicy: Always
+          env:
+            - name: PORT
+              value: '3000'
+            - name: IP_FROM_HEADER
+              value: 'true'
+            - name: SQLITE_DATABASE
+              value: /app/data/espial.sqlite3
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+          ports:
+            - containerPort: 3000
+              name: http
+      nodeSelector:
+        kubernetes.io/arch: amd64
