@@ -4,6 +4,5 @@ resources:
   - namespace.yaml
   - cert-manager/ks.yaml
   - external-dns/ks.yaml
-  - frp-operator/ks.yaml
   - iperf3/ks.yaml
   - k8s-gateway/ks.yaml
