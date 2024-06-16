@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: coder
@@ -22,13 +22,13 @@ spec:
               name: coder-postgres-secret
               key: db_url
         - name: CODER_ACCESS_URL
-          value: "https://coder.fadhlika.com"
+          value: 'https://coder.fadhlika.com'
       ingress:
         enable: true
         host: coder.fadhlika.com
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt"
-          kubernetes.io/ingress.class: "traefik"
+          cert-manager.io/cluster-issuer: 'letsencrypt'
+          kubernetes.io/ingress.class: 'traefik'
 
         tls:
           enable: true
