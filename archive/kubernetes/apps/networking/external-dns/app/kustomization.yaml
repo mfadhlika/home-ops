@@ -3,5 +3,4 @@ kind: Kustomization
 namespace: networking
 resources:
   - https://raw.githubusercontent.com/kubernetes-sigs/external-dns/v0.10.2/docs/contributing/crd-source/crd-manifest.yaml
-  - cloudflare-secret.yaml
   - helm-release.yaml
