@@ -1,7 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  # namespace
   - namespace.yaml
+  # secret
+  - cloudflare-secret.yaml
+  # apps
   - cert-manager/ks.yaml
   - iperf3/ks.yaml
   - k8s-gateway/ks.yaml

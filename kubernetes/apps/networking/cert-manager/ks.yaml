@@ -22,7 +22,6 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: external-secrets-stores
     - name: cert-manager-crds
   path: ./kubernetes/apps/networking/cert-manager/app
   prune: true
