@@ -5,6 +5,7 @@ resources:
   - actions-runner-controller.yaml
   - backube.yaml
   - bitnami.yaml
+  - cloudflare-tunnels-operator.yaml
   - cnpg.yaml
   - coder-v2.yaml
   - csi-driver-smb.yaml

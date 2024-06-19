@@ -1,0 +1,12 @@
+apiVersion: cloudflare-tunnels-operator.io/v1alpha1
+kind: ClusterTunnel
+metadata:
+  name: homelab
+spec:
+  cloudflare:
+    email: cloudflare@fadhlika.com
+    accountId: 199699894538ce864ef6e84b322a8dd9
+    zoneId: 11d205dcd5445265e9b7863c003d7346
+    apiKeySecretRef:
+      name: cloudflare-secret
+      key: cloudflare_api_key
