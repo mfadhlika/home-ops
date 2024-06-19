@@ -2,9 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: adguardhome
-  annotations:
-    cert-manager.io/cluster-issuer: 'letsencrypt'
 spec:
+  ingressClassName: cloudflare-tunnels
   rules:
     - host: adguardhome.fadhlika.com
       http:
@@ -16,7 +15,3 @@ spec:
                 name: adguardhome-http
                 port:
                   name: http
-  tls:
-    - secretName: adguardhome-tls
-      hosts:
-        - adguardhome.fadhlika.com
