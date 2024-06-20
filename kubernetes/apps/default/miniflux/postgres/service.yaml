@@ -1,26 +1,8 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: miniflux-postgres
-  labels:
-    app.kubernetes.io/part-of: miniflux
-    app.kubernetes.io/name: postgres
-    app.kubernetes.io/component: database
-spec:
-  ports:
-    - port: 5432
-      protocol: TCP
-      name: postgres-port
-  type: ClusterIP
-  selector:
-    app.kubernetes.io/part-of: miniflux
-    app.kubernetes.io/name: postgres
-    app.kubernetes.io/component: database
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: miniflux-postgres-headless
+  name: miniflux-postgres
   labels:
     app.kubernetes.io/part-of: miniflux
     app.kubernetes.io/name: postgres

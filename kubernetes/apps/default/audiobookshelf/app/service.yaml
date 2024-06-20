@@ -7,8 +7,7 @@ metadata:
     app.kubernetes.io/name: audiobookshelf
     app.kubernetes.io/component: server
 spec:
-  type: LoadBalancer
-  loadBalancerClass: metallb
+  clusterIP: None
   selector:
     app.kubernetes.io/part-of: audiobookshelf
     app.kubernetes.io/name: audiobookshelf

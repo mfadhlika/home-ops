@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: qbittorrent
     app.kubernetes.io/component: server
 spec:
-  type: ClusterIP
+  clusterIP: None
   selector:
     app.kubernetes.io/part-of: qbittorrent
     app.kubernetes.io/name: qbittorrent
@@ -32,6 +32,7 @@ metadata:
 spec:
   type: LoadBalancer
   loadBalancerClass: metallb
+  externalTrafficPolicy: Local
   selector:
     app.kubernetes.io/part-of: qbittorrent
     app.kubernetes.io/name: qbittorrent
@@ -55,6 +56,7 @@ metadata:
 spec:
   type: LoadBalancer
   loadBalancerClass: metallb
+  externalTrafficPolicy: Local
   selector:
     app.kubernetes.io/part-of: qbittorrent
     app.kubernetes.io/name: qbittorrent

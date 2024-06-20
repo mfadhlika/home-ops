@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/part-of: rssbridge
     app.kubernetes.io/name: rssbridge
 spec:
-  type: ClusterIP
+  clusterIP: None
   selector:
     app.kubernetes.io/part-of: rssbridge
     app.kubernetes.io/name: rssbridge
